@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WooCommerce Shipday
-Plugin URI: http://localhost/woocommerce
+Plugin URI: https://github.com/phpfreak6/WooCommerce-Shipday
 Version: 0.1.0
 Description: Allows you to add shipday API configuration and create connection with shipday. Then anyone places any order to the WooCommerce site it should also appear on your Shipday dispatch dashboard.
 Author: moinislam
-Author URI: http://localhost/woocommerce
+Author URI: http://moinislam.com
 Text Domain: woocommerce-shipday
 */
 
