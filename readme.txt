@@ -14,6 +14,6 @@ Allows you to add shipday API configuration and create connection with shipday t
 
 1. Upload `woocommerce-shipday` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Configure the options on the WooCommerce settings shipday tab.
+3. Configure the options on the WooCommerce settings shipday tab.See in the screenshot https://prnt.sc/uxkksw
 3. Done
 
