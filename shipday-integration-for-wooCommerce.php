@@ -16,9 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**************************************************
 	To check if WooCommerce plugin is actived
 ***************************************************/
-
-if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )))) {
-
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+if(is_plugin_active('woocommerce/woocommerce.php')){
 	class WC_Settings_Tab_Shipday {
 
 		/*
@@ -37,10 +36,10 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 		Function for Register custom js file.
 		*/
 		public static function register_wcsscript(){
-			wp_enqueue_script( 'custom-wcsscript', plugin_dir_url( __FILE__ ) . '/js/wc-shipday-script.js', array(), '1.0' );
+			wp_enqueue_script( 'custom-wcsscript', plugin_dir_url( __FILE__ ) . 'js/wc-shipday-script.js', array(), '1.0' );
 			wp_enqueue_script( 'custom-wcsscript' );
 		}
-		
+
 		/*
 		Add a new shipday tab
 		*/
@@ -85,7 +84,7 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 			$business_name 		= 	sanitize_text_field($postdata['wc_settings_tab_shipday_business_name']);
 			$pickup_address 	= 	sanitize_text_field($postdata['wc_settings_tab_shipday_pickup_address']);
 			$pickup_phone 		= 	sanitize_text_field($postdata['wc_settings_tab_shipday_pickup_phone']);
-			
+
 			$shipday_location 	= 	sanitize_text_field($postdata['wc_settings_tab_shipday_location']);
 			$vendor_type 		= 	sanitize_text_field($postdata['wc_settings_tab_shipday_vendor_type']);
 
@@ -266,7 +265,7 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 	WC_Settings_Tab_Shipday::init();
 
 	/*
-	woocommerce delete webhook callback 
+	woocommerce delete webhook callback
 	*/
 
 	function action_woocommerce_delete_webhook( $id, $webhook ) {
@@ -282,11 +281,11 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 	}
 
 	add_action( 'woocommerce_webhook_deleted', 'action_woocommerce_delete_webhook', 10, 2 );
-	
+
 	/*
 	Function for get Dokan vendor data.
 	*/
-	if (in_array( 'dokan-lite/dokan.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )))) {
+	if(is_plugin_active('dokan-lite/dokan.php')){
 		function get_dokanvendor_data($get_items, $item_meta_data){
 			foreach($get_items as $_get_items){
 				$itemid = $_get_items->get_id();
@@ -303,12 +302,12 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 			}
 		}
 	}
-	
+
 	/*
 	Woocommerce function for get order detail after processing order.
 	*/
 	// check if dokan plugin is activated or not.
-	if (in_array( 'dokan-lite/dokan.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )))) {
+	if(is_plugin_active('dokan-lite/dokan.php')){
 		add_action('woocommerce_thankyou', 'vendor_info', 10, 1);
 		function vendor_info( $order_id ) {
 			include_once(ABSPATH .'wp-admin/includes/plugin.php');
@@ -329,7 +328,7 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 
 		}
 	}
-	
+
 	/*
 	Woocommerce function for remove extra vendor data on order received page.
 	*/
@@ -342,14 +341,14 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 		}
 		return $formatted_meta;
 	}
-	
+
 	/*
 	Function for add extra data in woocommerce orders webhook.
 	*/
 	/*
 	Check if WCFM plugin is activated.
 	*/
-	if (in_array( 'wc-multivendor-marketplace/wc-multivendor-marketplace.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )))) {
+	if(is_plugin_active('wc-multivendor-marketplace/wc-multivendor-marketplace.php')){
 		function wcfmm_add_vendor_info_in_rest_order($response_data){
 			$vendor_ids = [];
 			foreach ( $response_data as $data ) {
@@ -371,7 +370,7 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 			}
 
 			$data = $response_data->get_data();
-			
+
 			foreach ( $vendor_ids as $store_id ) {
 				$name = get_user_meta( $store_id, 'nickname', true );
 				$shop_name = get_user_meta( $store_id, 'store_name', true );
@@ -402,14 +401,14 @@ if (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', ge
 			}
 			$response_data->set_data($data);
 			return $response_data;
-			
+
 		}
 		add_filter( 'woocommerce_rest_prepare_shop_order_object', 'wcfmm_add_vendor_info_in_rest_order', 10, 1 );
 	}
 	/*
 	Check if Dokan plugin is activated.
 	*/
-	if (in_array( 'dokan-lite/dokan.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )))) {
+	if(is_plugin_active('dokan-lite/dokan.php')){
 		function dokann_add_vendor_info_in_rest_order($response_data){
 			$vendor_ids = [];
 			foreach ( $response_data as $data ) {
